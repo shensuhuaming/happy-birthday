@@ -221,11 +221,11 @@
 
         // 倒计时功能
         function updateCountdown(){
-			const targetDate = new Date('2025-05-28T00:00:00+08:00');
-			const now = new Date();
+			const targetDate = new Date.UTC('2025,4,28');
+			const nowUTC = Date.now();
 			console.log("目标日期:",targetDate);
 			console.log("当前日期:",now);
-			let diff = targetDate - now;
+			let diff = targetDate - nowUTC;
 
 			if(diff < 0&&!hasTriggered){
 				hasTriggered=true;
