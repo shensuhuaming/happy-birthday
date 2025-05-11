@@ -225,7 +225,7 @@
 			const now = new Date();
 			console.log("目标日期:",targetDate);
 			console.log("当前日期:",now);
-			let diff = targetDate - now;
+			let diff = targetDate。getTime() - now.getTime();
 
 			if(diff < 0&&!hasTriggered){
 				hasTriggered=true;
