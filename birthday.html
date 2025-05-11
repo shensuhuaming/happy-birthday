@@ -36,6 +36,42 @@
             animation: pulse 2s infinite;
         }
 
+		.celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+		.confetti {
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            position: absolute;
+            animation: confetti-fall 3s linear;
+        }
+
+        .firework {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            animation: explode 1s ease-out;
+        }
+
+        .countdown-end {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 0 0 10px #ff0000;
+            animation: glow 2s infinite;
+        }
+
         /* 气球动画 */
         .balloons {
             position: absolute;
@@ -127,6 +163,20 @@
                 transform: translateX(-30px);
             }
         }
+		        /* 新增关键帧动画 */
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(5); opacity: 0; }
+        }
+
+        @keyframes glow {
+            50% { text-shadow: 0 0 20px #ffd700; }
+        }
     </style>
 </head>
 <body>
@@ -143,8 +193,10 @@
         <span id="days">00</span>天
         <span id="hours">00</span>时
     </div>
+	<div class="celebration"></div>
 
     <script>
+	    let hasTriggered = false;
         // 初始化函数
         window.onload = function() {
             createBalloons();
@@ -173,7 +225,9 @@
 			const now = new Date();
 			let diff = targetDate - now;
 
-			if(diff < 0){
+			if(diff < 0&&!hasTriggered){
+				hasTriggered=true;
+				handleCountdownEnd();
 				document.getElementById('days').textContent = "00";
 				document.getElementById('hours').textContent = "00";
 				return;
@@ -185,6 +239,56 @@
 			document.getElementById('days').textContent = days.toString().padStart(2,'0');
 			document.getElementById('days').textContent = hours.toString().padStart(2,'0');
 		}
+		function handleCountdownEnd() {
+            // 显示庆祝文字
+            const endText = document.createElement('div');
+            endText.className = 'countdown-end';
+            endText.textContent = '生日快乐！🎉';
+            document.body.appendChild(endText);
+
+            // 生成特效元素
+            createConfetti(50);
+            createFireworks(5);
+            
+            // 改变背景
+            document.body.style.background = 'linear-gradient(45deg, #ff0000, #ffd700)';
+            
+            // 播放音效（需要用户交互后生效）
+            playCelebrationMusic();
+        }
+
+        function createConfetti(amount) {
+            const container = document.querySelector('.celebration');
+            for (let i = 0; i < amount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(confetti);
+            }
+        }
+
+        function createFireworks(amount) {
+            const container = document.querySelector('.celebration');
+            for (let i = 0; i < amount; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = Math.random() * 100 + '%';
+                firework.style.top = Math.random() * 100 + '%';
+                firework.style.background = `radial-gradient(circle, 
+                    hsl(${Math.random() * 360}, 100%, 50%) 20%, 
+                    rgba(255,255,255,0.5) 100%)`;
+                container.appendChild(firework);
+            }
+        }
+
+        function playCelebrationMusic() {
+            const audio = new Audio('https://actions.google.com/sounds/v1/celebrations/party_horn.ogg');
+            audio.play().catch(() => {
+                document.addEventListener('click', () => audio.play(), { once: true });
+            });
+        }
 
 		//礼盒交互
 		function openGift(){
