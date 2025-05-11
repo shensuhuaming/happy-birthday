@@ -1,0 +1,25 @@
+body{
+	background:linear-gradient(45deg,#ff6b6b,#ff8e6e);
+	font-family:'Pacifico',cursive;
+	}
+.title{
+	animation:pulse 2s infinite;
+	}
+
+@keyframes pulse{
+	0%{transform:scale(1);}
+	50%{transform:scale(1.1);}
+	100%{transform:scale(1);}
+	}
+
+.gift-box{
+	width:200px;
+	height:200px;
+	background:#ffd700
+	position:relative;
+	cursor:pointer;
+	transition:transform 0.5s;
+	}
+.gift-box:hover{
+	transform:rotate(15deg);
+	}
