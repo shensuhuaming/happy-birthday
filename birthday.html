@@ -223,6 +223,8 @@
         function updateCountdown(){
 			const targetDate = new Date('2025-05-28T00:00:00+08:00');
 			const now = new Date();
+			console.log("目标日期:",targetDate);
+			console.log("当前日期:",now);
 			let diff = targetDate - now;
 
 			if(diff < 0&&!hasTriggered){
