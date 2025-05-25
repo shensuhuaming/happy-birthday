@@ -2,11 +2,12 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>江江江</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
-        /* 基础样式 */
+        /* 优化后的CSS */
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +21,6 @@
             overflow-x: hidden;
         }
 
-        /* 欢迎页样式 */
         .hero {
             height: 100vh;
             display: flex;
@@ -32,11 +32,11 @@
         .title {
             color: #fff;
             font-size: 4rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             animation: pulse 2s infinite;
         }
 
-		.celebration {
+        .celebration {
             position: fixed;
             top: 0;
             left: 0;
@@ -46,19 +46,22 @@
             z-index: 999;
         }
 
-		.confetti {
+        .confetti {
             width: 10px;
             height: 10px;
-            background: #ffd700;
             position: absolute;
-            animation: confetti-fall 3s linear;
+            animation: confetti-fall 3s linear forwards;
+            transform: translateZ(0);
+            will-change: transform, opacity;
         }
 
         .firework {
             width: 50px;
             height: 50px;
             position: absolute;
-            animation: explode 1s ease-out;
+            animation: explode 1s ease-out forwards;
+            transform: translateZ(0);
+            will-change: transform, opacity;
         }
 
         .countdown-end {
@@ -72,7 +75,6 @@
             animation: glow 2s infinite;
         }
 
-        /* 气球动画 */
         .balloons {
             position: absolute;
             width: 100%;
@@ -90,19 +92,9 @@
             opacity: 0.8;
             background: linear-gradient(45deg, #ff3366, #ff8e8e);
             box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+            transform: translateZ(0);
         }
 
-        .balloon::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            width: 2px;
-            height: 30px;
-            background: #666;
-        }
-
-        /* 礼盒样式 */
         .gift-box {
             width: 200px;
             height: 200px;
@@ -125,7 +117,6 @@
             transform: translateY(-50%);
         }
 
-        /* 倒计时样式 */
         .countdown {
             position: fixed;
             top: 20px;
@@ -142,7 +133,23 @@
             margin: 0 5px;
         }
 
-        /* 动画定义 */
+        /* 响应式优化 */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+                text-align: center;
+            }
+            .countdown {
+                top: 10px;
+                left: 10px;
+                padding: 10px;
+            }
+            .gift-box {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
@@ -163,7 +170,7 @@
                 transform: translateX(-30px);
             }
         }
-		        /* 新增关键帧动画 */
+
         @keyframes confetti-fall {
             0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
             100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
@@ -193,18 +200,24 @@
         <span id="days">00</span>天
         <span id="hours">00</span>时
     </div>
-	<div class="celebration"></div>
+    <div class="celebration"></div>
 
     <script>
-	    let hasTriggered = false;
-        // 初始化函数
+        let hasTriggered = false;
+        let countdownInterval;
+        const audio = new Audio('https://actions.google.com/sounds/v1/celebrations/party_horn.ogg');
+        audio.preload = 'auto';
+
         window.onload = function() {
             createBalloons();
             updateCountdown();
-            setInterval(updateCountdown, 1000);
+            countdownInterval = setInterval(updateCountdown, 1000);
+            
+            document.body.addEventListener('click', () => {
+                document.hasUserInteracted = true;
+            }, { once: true });
         };
 
-        // 气球生成逻辑
         function createBalloons() {
             const container = document.querySelector('.balloons');
             const colors = ['#ff3366', '#4CAF50', '#2196F3', '#ffd700'];
@@ -219,41 +232,37 @@
             }
         }
 
-        // 倒计时功能
-        function updateCountdown(){
-			const targetDate = new Date('2025-05-28T00:00:00+08:00');
-			const now = new Date();
-			let diff = targetDate - now;
+        function updateCountdown() {
+            const targetDate = new Date('2025-05-28T00:00:00+08:00');
+            const now = new Date();
+            let diff = targetDate - now;
 
-			if(diff < 0&&!hasTriggered){
-				hasTriggered=true;
-				handleCountdownEnd();
-				document.getElementById('days').textContent = "00";
-				document.getElementById('hours').textContent = "00";
-				return;
-			}
-			
-			const days = Math.floor(diff / (1000*60*60*24));
-			const hours = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
+            if (diff < 0 && !hasTriggered) {
+                hasTriggered = true;
+                handleCountdownEnd();
+                document.getElementById('days').textContent = "00";
+                document.getElementById('hours').textContent = "00";
+                return;
+            }
 
-			document.getElementById('days').textContent = days.toString().padStart(2,'0');
-			document.getElementById('days').textContent = hours.toString().padStart(2,'0');
-		}
-		function handleCountdownEnd() {
-            // 显示庆祝文字
+            const days = Math.floor(diff / (1000*60*60*24));
+            const hours = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
+
+            document.getElementById('days').textContent = days.toString().padStart(2,'0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2,'0');
+        }
+
+        function handleCountdownEnd() {
+            clearInterval(countdownInterval);
+            
             const endText = document.createElement('div');
             endText.className = 'countdown-end';
             endText.textContent = '生日快乐！🎉';
             document.body.appendChild(endText);
 
-            // 生成特效元素
             createConfetti(50);
             createFireworks(5);
-            
-            // 改变背景
             document.body.style.background = 'linear-gradient(45deg, #ff0000, #ffd700)';
-            
-            // 播放音效（需要用户交互后生效）
             playCelebrationMusic();
         }
 
@@ -264,7 +273,11 @@
                 confetti.className = 'confetti';
                 confetti.style.left = Math.random() * 100 + '%';
                 confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.animation = `confetti-fall ${2 + Math.random() * 2}s linear forwards`;
+                
+                confetti.addEventListener('animationend', () => {
+                    confetti.remove();
+                });
                 container.appendChild(confetti);
             }
         }
@@ -279,26 +292,47 @@
                 firework.style.background = `radial-gradient(circle, 
                     hsl(${Math.random() * 360}, 100%, 50%) 20%, 
                     rgba(255,255,255,0.5) 100%)`;
+                firework.style.animation = `explode 1s ease-out forwards`;
+                
+                firework.addEventListener('animationend', () => {
+                    firework.remove();
+                });
                 container.appendChild(firework);
             }
         }
 
         function playCelebrationMusic() {
-            const audio = new Audio('https://actions.google.com/sounds/v1/celebrations/party_horn.ogg');
-            audio.play().catch(() => {
-                document.addEventListener('click', () => audio.play(), { once: true });
-            });
+            if (document.hasUserInteracted) {
+                audio.play();
+            } else {
+                document.addEventListener('click', () => {
+                    audio.play();
+                    document.hasUserInteracted = true;
+                }, { once: true });
+            }
         }
 
-		//礼盒交互
-		function openGift(){
-			const gift = document.querySelector('.gift-box');
-			gift.style.transform='rotate(360deg)scale(0)';
-			setTimeout(() =>{
-				alert('江大美女,天天开心!');
-				gift.style.transform ='none';
-			},500);
-		}
-	</script>
+        function openGift(){
+            const gift = document.querySelector('.gift-box');
+            gift.style.transform = 'rotate(360deg) scale(0)';
+            
+            const message = document.createElement('div');
+            message.textContent = '江大美女,天天开心!';
+            message.style.position = 'fixed';
+            message.style.top = '50%';
+            message.style.left = '50%';
+            message.style.transform = 'translate(-50%, -50%)';
+            message.style.color = '#fff';
+            message.style.fontSize = '2rem';
+            message.style.textShadow = '0 2px 4px rgba(0,0,0,0.5)';
+            message.style.animation = 'pulse 1s 2';
+
+            setTimeout(() => {
+                document.body.appendChild(message);
+                setTimeout(() => message.remove(), 2000);
+                gift.style.transform = 'none';
+            }, 500);
+        }
+    </script>
 </body>
 </html>
