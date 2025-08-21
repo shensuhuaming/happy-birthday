@@ -125,6 +125,7 @@
             font-family: 'Dancing Script', cursive;
         }
         
+        /* 修复蛋糕样式 */
         .cake-container {
             position: relative;
             height: 220px;
@@ -136,8 +137,8 @@
         .cake {
             position: absolute;
             bottom: 0;
-            width: 180px;
-            height: 90px;
+            width: 200px;
+            height: 80px;
             background: #f8c4c4;
             border-radius: 10px 10px 0 0;
             z-index: 2;
@@ -145,22 +146,34 @@
         
         .cake-top {
             position: absolute;
-            top: 80px;
+            top: -20px;
             left: 0;
-            width: 50%;
-            height: 30px;
+            width: 100%;
+            height: 40px;
             background: #ff9a9e;
             border-radius: 10px 10px 0 0;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cake-middle {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            width: calc(100% - 20px);
+            height: 20px;
+            background: #ffdfdf;
+            border-radius: 5px;
         }
         
         .candle {
             position: absolute;
-            top: 70px;
-            width: 12px;
-            height: 45px;
+            top: -60px;
+            width: 14px;
+            height: 55px;
             background: linear-gradient(to right, #ffda79, #ffdf8f, #ffda79);
-            border-radius: 6px;
-            z-index: 1;
+            border-radius: 7px;
+            z-index: 3;
+            box-shadow: 0 0 10px rgba(255, 218, 121, 0.5);
         }
         
         .candle:nth-child(1) {
@@ -178,11 +191,11 @@
         
         .flame {
             position: absolute;
-            top: 70px;
+            top: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 18px;
-            height: 35px;
+            width: 20px;
+            height: 40px;
             background: #ffda79;
             border-radius: 50% 50% 20% 20%;
             animation: flicker 1.2s infinite alternate;
@@ -212,6 +225,7 @@
             font-size: 1rem;
             color: #d44d5c;
             border: 2px solid #ff9a9e;
+            pointer-events: auto;
         }
         
         .bubble:hover {
@@ -293,7 +307,7 @@
             h1 { font-size: 3.2rem; }
             .birthday-card { padding: 25px; }
             .message { font-size: 1.1rem; }
-            .cake { width: 140px; }
+            .cake { width: 160px; }
         }
     </style>
 </head>
@@ -320,6 +334,7 @@
             <div class="cake-container">
                 <div class="cake"></div>
                 <div class="cake-top"></div>
+                <div class="cake-middle"></div>
                 
                 <div class="candle"></div>
                 <div class="candle"></div>
@@ -411,29 +426,53 @@
                 
                 document.body.appendChild(bubble);
                 
-                // 添加漂浮动画
-                let x = 0;
-                let y = 0;
-                let xSpeed = (Math.random() - 0.5) * 0.8;
-                let ySpeed = (Math.random() - 0.5) * 0.8;
+                // 气泡物理属性
+                let x = parseFloat(bubble.style.left);
+                let y = parseFloat(bubble.style.top);
+                let dx = (Math.random() - 0.5) * 2;
+                let dy = (Math.random() - 0.5) * 2;
+                const speed = 1.5;
                 
+                // 气泡动画函数
                 function animateBubble() {
-                    x += xSpeed;
-                    y += ySpeed;
+                    // 更新位置
+                    x += dx * speed;
+                    y += dy * speed;
                     
-                    // 边界检测
-                    const rect = bubble.getBoundingClientRect();
-                    if (rect.left <= 300 || rect.right >= window.innerWidth - 10) {
-                        xSpeed = -xSpeed;
+                    // 获取气泡尺寸
+                    const bubbleRect = bubble.getBoundingClientRect();
+                    
+                    // 边界碰撞检测
+                    // 右侧边界
+                    if (x + bubbleRect.width > window.innerWidth) {
+                        x = window.innerWidth - bubbleRect.width;
+                        dx = -Math.abs(dx) * (0.9 + Math.random() * 0.2); // 随机反弹系数
                     }
-                    if (rect.top <= 10 || rect.bottom >= window.innerHeight - 10) {
-                        ySpeed = -ySpeed;
+                    // 左侧边界（考虑左侧面板）
+                    if (x < 300) {
+                        x = 300;
+                        dx = Math.abs(dx) * (0.9 + Math.random() * 0.2);
+                    }
+                    // 底部边界
+                    if (y + bubbleRect.height > window.innerHeight) {
+                        y = window.innerHeight - bubbleRect.height;
+                        dy = -Math.abs(dy) * (0.9 + Math.random() * 0.2);
+                    }
+                    // 顶部边界
+                    if (y < 0) {
+                        y = 0;
+                        dy = Math.abs(dy) * (0.9 + Math.random() * 0.2);
                     }
                     
-                    bubble.style.transform = `translate(${x}px, ${y}px)`;
+                    // 应用新位置
+                    bubble.style.left = `${x}px`;
+                    bubble.style.top = `${y}px`;
+                    
+                    // 继续动画
                     requestAnimationFrame(animateBubble);
                 }
                 
+                // 启动动画
                 animateBubble();
             }
             
@@ -459,5 +498,3 @@
     </script>
 </body>
 </html>
-
-
