@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>致江少！</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -23,152 +23,208 @@
             overflow-x: hidden;
             color: #d44d5c;
             padding: 20px;
+            text-align: center;
         }
         
         .container {
             max-width: 800px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            padding: 30px;
+            padding: 40px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            text-align: center;
             position: relative;
             overflow: hidden;
         }
         
         h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 4rem;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 4.5rem;
             margin-bottom: 20px;
             color: #d44d5c;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
         .message {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin: 25px 0;
             color: #333;
+            font-family: 'Dancing Script', cursive;
         }
         
         .cake-container {
             position: relative;
-            height: 200px;
-            margin: 30px 0;
+            height: 220px;
+            margin: 40px 0;
+            display: flex;
+            justify-content: center;
         }
         
         .cake {
             position: absolute;
             bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 80px;
-            background: #fad0c4;
+            width: 180px;
+            height: 90px;
+            background: #f8c4c4;
             border-radius: 10px 10px 0 0;
+            z-index: 2;
         }
         
-        .cake:before {
-            content: '';
+        .cake-top {
             position: absolute;
-            top: -20px;
+            top: -15px;
             left: 0;
             width: 100%;
-            height: 20px;
+            height: 30px;
             background: #ff9a9e;
             border-radius: 10px 10px 0 0;
         }
         
         .candle {
             position: absolute;
-            top: -50px;
+            top: -35px;
+            width: 12px;
+            height: 45px;
+            background: linear-gradient(to right, #ffda79, #ffdf8f, #ffda79);
+            border-radius: 6px;
+            z-index: 3;
+        }
+        
+        .candle:nth-child(1) {
+            left: 30%;
+        }
+        
+        .candle:nth-child(2) {
             left: 50%;
             transform: translateX(-50%);
-            width: 10px;
-            height: 40px;
-            background: #fff;
-            border-radius: 5px;
+        }
+        
+        .candle:nth-child(3) {
+            right: 30%;
         }
         
         .flame {
             position: absolute;
-            top: -60px;
+            top: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 15px;
-            height: 30px;
+            width: 18px;
+            height: 35px;
             background: #ffda79;
             border-radius: 50% 50% 20% 20%;
-            animation: flicker 1s infinite alternate;
+            animation: flicker 1.2s infinite alternate;
             box-shadow: 0 0 20px #ffda79, 0 0 40px #ffda79;
+            z-index: 4;
         }
         
         @keyframes flicker {
             0% { transform: translateX(-50%) scale(1); }
-            100% { transform: translateX(-50%) scale(1.1); }
+            25% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+            50% { transform: translateX(-50%) scale(1.05) rotate(-2deg); }
+            75% { transform: translateX(-50%) scale(1.15) rotate(2deg); }
+            100% { transform: translateX(-50%) scale(1.2); }
+        }
+        
+        .decoration {
+            position: absolute;
+            bottom: 70px;
+            width: 25px;
+            height: 25px;
+            background: #d44d5c;
+            border-radius: 50%;
+            z-index: 3;
+        }
+        
+        .decoration:nth-child(1) {
+            left: 25%;
+            background: #ff9a9e;
+        }
+        
+        .decoration:nth-child(2) {
+            left: 40%;
+            background: #ffda79;
+        }
+        
+        .decoration:nth-child(3) {
+            right: 40%;
+            background: #77d0e1;
+        }
+        
+        .decoration:nth-child(4) {
+            right: 25%;
+            background: #b388eb;
         }
         
         .balloon {
             position: absolute;
-            width: 40px;
-            height: 50px;
+            width: 45px;
+            height: 55px;
             border-radius: 50%;
             bottom: -100px;
             animation: float 15s infinite;
+            z-index: 1;
         }
         
         .balloon:before {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
             width: 2px;
-            height: 20px;
+            height: 30px;
             background: rgba(255, 255, 255, 0.7);
         }
         
         .balloon1 {
-            background: rgba(255, 107, 107, 0.8);
-            left: 20%;
+            background: rgba(255, 107, 107, 0.85);
+            left: 15%;
             animation-delay: 0s;
         }
         
         .balloon2 {
-            background: rgba(255, 206, 106, 0.8);
-            left: 40%;
-            animation-delay: 2s;
+            background: rgba(255, 206, 106, 0.85);
+            left: 35%;
+            animation-delay: 1.5s;
         }
         
         .balloon3 {
-            background: rgba(77, 208, 225, 0.8);
-            left: 60%;
-            animation-delay: 4s;
+            background: rgba(77, 208, 225, 0.85);
+            right: 35%;
+            animation-delay: 3s;
         }
         
         .balloon4 {
-            background: rgba(179, 136, 235, 0.8);
-            left: 80%;
-            animation-delay: 6s;
+            background: rgba(179, 136, 235, 0.85);
+            right: 15%;
+            animation-delay: 4.5s;
         }
         
         @keyframes float {
             0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-300px) rotate(10deg); }
-            100% { transform: translateY(-600px) rotate(-10deg); opacity: 0; }
+            50% { transform: translateY(-300px) rotate(8deg); }
+            100% { transform: translateY(-600px) rotate(-8deg); opacity: 0; }
         }
         
         .wish-btn {
             background: #d44d5c;
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 16px 45px;
+            font-size: 1.3rem;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 20px;
+            margin: 20px 0;
             box-shadow: 0 5px 15px rgba(212, 77, 92, 0.4);
+            font-family: 'Ma Shan Zheng', cursive;
         }
         
         .wish-btn:hover {
@@ -179,8 +235,8 @@
         
         .confetti {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background: #ffda79;
             opacity: 0;
         }
@@ -191,21 +247,29 @@
             right: 20px;
             background: transparent;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
             color: #d44d5c;
+            transition: transform 0.3s;
+        }
+        
+        .music-btn:hover {
+            transform: scale(1.2);
         }
         
         footer {
             margin-top: 30px;
             color: #fff;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
         
         @media (max-width: 600px) {
-            h1 { font-size: 3rem; }
-            .container { padding: 20px; }
+            h1 { font-size: 3.2rem; }
+            .container { padding: 25px; }
+            .message { font-size: 1.1rem; }
+            .cake { width: 140px; }
         }
     </style>
 </head>
@@ -221,8 +285,18 @@
         
         <div class="cake-container">
             <div class="cake"></div>
+            <div class="cake-top"></div>
+            
             <div class="candle"></div>
+            <div class="candle"></div>
+            <div class="candle"></div>
+            
             <div class="flame"></div>
+            
+            <div class="decoration"></div>
+            <div class="decoration"></div>
+            <div class="decoration"></div>
+            <div class="decoration"></div>
             
             <div class="balloon balloon1"></div>
             <div class="balloon balloon2"></div>
@@ -253,7 +327,7 @@
                 const container = document.querySelector('.container');
                 const colors = ['#ff9a9e', '#ffda79', '#77d0e1', '#b388eb', '#5ce1e6'];
                 
-                for (let i = 0; i < 50; i++) {
+                for (let i = 0; i < 60; i++) {
                     const confetti = document.createElement('div');
                     confetti.classList.add('confetti');
                     confetti.style.left = Math.random() * 100 + '%';
@@ -265,14 +339,14 @@
                     // 动画
                     setTimeout(() => {
                         confetti.style.opacity = '1';
-                        confetti.style.transition = 'all 1s ease';
+                        confetti.style.transition = 'all 1.2s ease';
                         confetti.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(${Math.random() * 360}deg)`;
                     }, 10);
                     
                     // 移除纸屑
                     setTimeout(() => {
                         confetti.remove();
-                    }, 1000);
+                    }, 1200);
                 }
             }
             
@@ -304,5 +378,3 @@
     </script>
 </body>
 </html>
-
-
