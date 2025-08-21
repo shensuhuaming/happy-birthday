@@ -2,337 +2,305 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>江江江</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <title>生日快乐！</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* 优化后的CSS */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
             min-height: 100vh;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-            font-family: 'Pacifico', cursive;
-            overflow-x: hidden;
-        }
-
-        .hero {
-            height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            overflow-x: hidden;
+            color: #d44d5c;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
             position: relative;
+            overflow: hidden;
         }
-
-        .title {
-            color: #fff;
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
             font-size: 4rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            animation: pulse 2s infinite;
+            margin-bottom: 20px;
+            color: #d44d5c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
-
-        .celebration {
-            position: fixed;
-            top: 0;
+        
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .cake-container {
+            position: relative;
+            height: 200px;
+            margin: 30px 0;
+        }
+        
+        .cake {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 80px;
+            background: #fad0c4;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .cake:before {
+            content: '';
+            position: absolute;
+            top: -20px;
             left: 0;
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
+            height: 20px;
+            background: #ff9a9e;
+            border-radius: 10px 10px 0 0;
         }
-
+        
+        .candle {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 40px;
+            background: #fff;
+            border-radius: 5px;
+        }
+        
+        .flame {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 30px;
+            background: #ffda79;
+            border-radius: 50% 50% 20% 20%;
+            animation: flicker 1s infinite alternate;
+            box-shadow: 0 0 20px #ffda79, 0 0 40px #ffda79;
+        }
+        
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.1); }
+        }
+        
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            border-radius: 50%;
+            bottom: -100px;
+            animation: float 15s infinite;
+        }
+        
+        .balloon:before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        .balloon1 {
+            background: rgba(255, 107, 107, 0.8);
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .balloon2 {
+            background: rgba(255, 206, 106, 0.8);
+            left: 40%;
+            animation-delay: 2s;
+        }
+        
+        .balloon3 {
+            background: rgba(77, 208, 225, 0.8);
+            left: 60%;
+            animation-delay: 4s;
+        }
+        
+        .balloon4 {
+            background: rgba(179, 136, 235, 0.8);
+            left: 80%;
+            animation-delay: 6s;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-300px) rotate(10deg); }
+            100% { transform: translateY(-600px) rotate(-10deg); opacity: 0; }
+        }
+        
+        .wish-btn {
+            background: #d44d5c;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(212, 77, 92, 0.4);
+        }
+        
+        .wish-btn:hover {
+            background: #bf3c4b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 77, 92, 0.6);
+        }
+        
         .confetti {
+            position: absolute;
             width: 10px;
             height: 10px;
+            background: #ffda79;
+            opacity: 0;
+        }
+        
+        .music-btn {
             position: absolute;
-            animation: confetti-fall 3s linear forwards;
-            transform: translateZ(0);
-            will-change: transform, opacity;
-        }
-
-        .firework {
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            animation: explode 1s ease-out forwards;
-            transform: translateZ(0);
-            will-change: transform, opacity;
-        }
-
-        .countdown-end {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            color: #fff;
-            text-shadow: 0 0 10px #ff0000;
-            animation: glow 2s infinite;
-        }
-
-        .balloons {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .balloon {
-            width: 50px;
-            height: 60px;
-            border-radius: 50%;
-            position: absolute;
-            bottom: -100px;
-            animation: float 8s infinite;
-            opacity: 0.8;
-            background: linear-gradient(45deg, #ff3366, #ff8e8e);
-            box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
-            transform: translateZ(0);
-        }
-
-        .gift-box {
-            width: 200px;
-            height: 200px;
-            background: #ffd700;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            cursor: pointer;
-            transition: transform 0.5s;
-            border-radius: 10px;
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .ribbon {
-            position: absolute;
-            width: 100%;
-            height: 20px;
-            background: #ff3366;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .countdown {
-            position: fixed;
             top: 20px;
-            left: 20px;
-            background: rgba(255,255,255,0.9);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .countdown span {
+            right: 20px;
+            background: transparent;
+            border: none;
             font-size: 1.5rem;
-            color: #ff6b6b;
-            margin: 0 5px;
+            cursor: pointer;
+            color: #d44d5c;
         }
-
-        /* 响应式优化 */
-        @media (max-width: 768px) {
-            .title {
-                font-size: 2.5rem;
-                text-align: center;
-            }
-            .countdown {
-                top: 10px;
-                left: 10px;
-                padding: 10px;
-            }
-            .gift-box {
-                width: 120px;
-                height: 120px;
-            }
+        
+        footer {
+            margin-top: 30px;
+            color: #fff;
+            text-align: center;
+            font-size: 0.9rem;
         }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateX(0);
-                opacity: 0.8;
-            }
-            50% {
-                transform: translateX(30px);
-            }
-            100% {
-                bottom: 100vh;
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-        }
-
-        @keyframes confetti-fall {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
-
-        @keyframes explode {
-            0% { transform: scale(0); opacity: 1; }
-            100% { transform: scale(5); opacity: 0; }
-        }
-
-        @keyframes glow {
-            50% { text-shadow: 0 0 20px #ffd700; }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 3rem; }
+            .container { padding: 20px; }
         }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <h1 class="title">江大美女!</h1>
-        <div class="balloons"></div>
+    <div class="container">
+        <button class="music-btn" id="musicBtn">🎵</button>
+        <h1>生日快乐！</h1>
+        
+        <div class="message">
+            <p>在这个特别的日子里，愿你的每一个愿望都能实现，每一刻都充满欢笑！</p>
+            <p>祝你新的一年里健康、快乐、成功相伴，每一天都像今天一样灿烂！</p>
+        </div>
+        
+        <div class="cake-container">
+            <div class="cake"></div>
+            <div class="candle"></div>
+            <div class="flame"></div>
+            
+            <div class="balloon balloon1"></div>
+            <div class="balloon balloon2"></div>
+            <div class="balloon balloon3"></div>
+            <div class="balloon balloon4"></div>
+        </div>
+        
+        <button class="wish-btn" id="wishBtn">点击送上祝福</button>
     </div>
-
-    <div class="gift-box" onclick="openGift()">
-        <div class="ribbon"></div>
-    </div>
-
-    <div class="countdown">
-        <span id="days">00</span>天
-        <span id="hours">00</span>时
-    </div>
-    <div class="celebration"></div>
-
+    
+    <footer>
+        <p>用心制作的生日祝福 ❤️ | 祝你拥有美好的一天！</p>
+    </footer>
+    
+    <audio id="birthdaySong" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+    </audio>
+    
     <script>
-        let hasTriggered = false;
-        let countdownInterval;
-        const audio = new Audio('https://actions.google.com/sounds/v1/celebrations/party_horn.ogg');
-        audio.preload = 'auto';
-
-        window.onload = function() {
-            createBalloons();
-            updateCountdown();
-            countdownInterval = setInterval(updateCountdown, 1000);
+        document.addEventListener('DOMContentLoaded', function() {
+            const wishBtn = document.getElementById('wishBtn');
+            const musicBtn = document.getElementById('musicBtn');
+            const birthdaySong = document.getElementById('birthdaySong');
+            let musicPlaying = false;
             
-            document.body.addEventListener('click', () => {
-                document.hasUserInteracted = true;
-            }, { once: true });
-        };
-
-        function createBalloons() {
-            const container = document.querySelector('.balloons');
-            const colors = ['#ff3366', '#4CAF50', '#2196F3', '#ffd700'];
-            
-            for(let i = 0; i < 30; i++) {
-                const balloon = document.createElement('div');
-                balloon.className = 'balloon';
-                balloon.style.left = Math.random() * 100 + '%';
-                balloon.style.animationDelay = Math.random() * 5 + 's';
-                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                container.appendChild(balloon);
-            }
-        }
-
-        function updateCountdown() {
-            const targetDate = new Date('2025-05-28T00:00:00+08:00');
-            const now = new Date();
-            let diff = targetDate - now;
-
-            if (diff < 0 && !hasTriggered) {
-                hasTriggered = true;
-                handleCountdownEnd();
-                document.getElementById('days').textContent = "00";
-                document.getElementById('hours').textContent = "00";
-                return;
-            }
-
-            const days = Math.floor(diff / (1000*60*60*24));
-            const hours = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
-
-            document.getElementById('days').textContent = days.toString().padStart(2,'0');
-            document.getElementById('hours').textContent = hours.toString().padStart(2,'0');
-        }
-
-        function handleCountdownEnd() {
-            clearInterval(countdownInterval);
-            
-            const endText = document.createElement('div');
-            endText.className = 'countdown-end';
-            endText.textContent = '生日快乐！🎉';
-            document.body.appendChild(endText);
-
-            createConfetti(50);
-            createFireworks(5);
-            document.body.style.background = 'linear-gradient(45deg, #ff0000, #ffd700)';
-            playCelebrationMusic();
-        }
-
-        function createConfetti(amount) {
-            const container = document.querySelector('.celebration');
-            for (let i = 0; i < amount; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-                confetti.style.animation = `confetti-fall ${2 + Math.random() * 2}s linear forwards`;
+            // 创建彩色纸屑
+            function createConfetti() {
+                const container = document.querySelector('.container');
+                const colors = ['#ff9a9e', '#ffda79', '#77d0e1', '#b388eb', '#5ce1e6'];
                 
-                confetti.addEventListener('animationend', () => {
-                    confetti.remove();
-                });
-                container.appendChild(confetti);
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    container.appendChild(confetti);
+                    
+                    // 动画
+                    setTimeout(() => {
+                        confetti.style.opacity = '1';
+                        confetti.style.transition = 'all 1s ease';
+                        confetti.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(${Math.random() * 360}deg)`;
+                    }, 10);
+                    
+                    // 移除纸屑
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 1000);
+                }
             }
-        }
-
-        function createFireworks(amount) {
-            const container = document.querySelector('.celebration');
-            for (let i = 0; i < amount; i++) {
-                const firework = document.createElement('div');
-                firework.className = 'firework';
-                firework.style.left = Math.random() * 100 + '%';
-                firework.style.top = Math.random() * 100 + '%';
-                firework.style.background = `radial-gradient(circle, 
-                    hsl(${Math.random() * 360}, 100%, 50%) 20%, 
-                    rgba(255,255,255,0.5) 100%)`;
-                firework.style.animation = `explode 1s ease-out forwards`;
-                
-                firework.addEventListener('animationend', () => {
-                    firework.remove();
-                });
-                container.appendChild(firework);
-            }
-        }
-
-        function playCelebrationMusic() {
-            if (document.hasUserInteracted) {
-                audio.play();
-            } else {
-                document.addEventListener('click', () => {
-                    audio.play();
-                    document.hasUserInteracted = true;
-                }, { once: true });
-            }
-        }
-
-        function openGift(){
-            const gift = document.querySelector('.gift-box');
-            gift.style.transform = 'rotate(360deg) scale(0)';
             
-            const message = document.createElement('div');
-            message.textContent = '江大美女,天天开心!';
-            message.style.position = 'fixed';
-            message.style.top = '50%';
-            message.style.left = '50%';
-            message.style.transform = 'translate(-50%, -50%)';
-            message.style.color = '#fff';
-            message.style.fontSize = '2rem';
-            message.style.textShadow = '0 2px 4px rgba(0,0,0,0.5)';
-            message.style.animation = 'pulse 1s 2';
-
-            setTimeout(() => {
-                document.body.appendChild(message);
-                setTimeout(() => message.remove(), 2000);
-                gift.style.transform = 'none';
-            }, 500);
-        }
+            // 祝福按钮点击事件
+            wishBtn.addEventListener('click', function() {
+                createConfetti();
+                this.textContent = '祝福已送达！';
+                this.style.background = '#4CAF50';
+                
+                setTimeout(() => {
+                    this.textContent = '点击送上祝福';
+                    this.style.background = '#d44d5c';
+                }, 1500);
+            });
+            
+            // 音乐按钮点击事件
+            musicBtn.addEventListener('click', function() {
+                if (musicPlaying) {
+                    birthdaySong.pause();
+                    this.textContent = '🎵';
+                    musicPlaying = false;
+                } else {
+                    birthdaySong.play();
+                    this.textContent = '🔊';
+                    musicPlaying = true;
+                }
+            });
+        });
     </script>
 </body>
 </html>
